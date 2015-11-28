@@ -1,0 +1,157 @@
+﻿<?php
+	error_reporting(0);
+	//session_cache_expire(5);
+	if (isset($_REQUEST['q']) && $_REQUEST['q']=='logout') {
+		//destruction de la session
+		session_start();
+		setcookie('PHPSESSID','',time()-360);
+		session_destroy();
+	}
+	//chargement de la configuration de connexion
+	include (dirname(__FILE__) . "./getConfig.php");
+
+	$dataOK		=False;
+	if (isset($_REQUEST['btnValider']) && !empty($_REQUEST['btnValider'])) {
+		if (!empty($_REQUEST['userName']) && !empty($_REQUEST['userPass'])) {
+			$user 		=$_REQUEST['userName'];
+			$ldapRDN	=$user.$ini_array["account_suffix"];
+			$ldapPass	=$_REQUEST['userPass'];
+			$dataOK		=True;
+		}else{
+			$msgType="warning";
+			$message="Vous devez saisir vos identifiants!";
+		}
+	}
+	if ($dataOK) {
+		//initialisation et instantiation de la classe adLDAP
+		include (dirname(__FILE__) . "./src/adLDAP.php");
+
+		$ini_array["admin_username"]=$user;
+		$ini_array["admin_password"]=$ldapPass;
+
+		try {
+			$adldap = new adLDAP($ini_array);
+		}
+		catch (adLDAPException $e) {
+			echo"<script>document.location='index.html?q=logout&error=unable'</script>";
+			echo("Erreur fatal: ".$e);
+
+		}
+        //authentification de l'utilisateur
+        
+		if ($adldap->authenticate($user, $ldapPass)){
+			$currentUserInfos=$adldap->user()->infos($user);
+			//test si l'utilisateur est membre des administrateurs
+			if ($adldap->user()->isAdmin($user)===true) {
+				//creation de session et redirection
+				session_start();
+	            $_SESSION["userinfo"]	=$currentUserInfos;
+	            $_SESSION["userinfo"]["ldapPass"]=$ldapPass;
+	            $_SESSION['time']     = time();
+				echo"<script>document.location='manage.php'</script>";
+				exit;
+			}else{
+				$msgType="error";
+				$message="Vous n'êtes pas autorisé à utiliser cette application!";
+			}
+		}else{
+			$msgType="error";
+			$message="Erreur d'authentification, vérifier vos infos!";
+		}
+	}
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="fr-MA">
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="icon" href="favicon.png" sizes="16x16" type="image/png">
+	
+	<title>Administration Active Directory v0.1</title>
+	<meta name="author" content="Moda.com">
+    <style type="text/css" media="all">
+		@import url("css/style.css");
+		@import url("css/jquery.wysiwyg.css");
+		@import url("css/facebox.css");
+		@import url("css/visualize.css");
+		@import url("css/date_input.css");
+    </style>
+	
+	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=7" /><![endif]-->
+	<!--[if lt IE 8]><style type="text/css" media="all">@import url("css/ie.css");</style><![endif]-->
+
+	<!--[if IE]><script type="text/javascript" src="js/excanvas.js"></script><![endif]-->
+	
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery.img.preload.js"></script>
+	<script type="text/javascript" src="js/jquery.filestyle.mini.js"></script>
+	<script type="text/javascript" src="js/jquery.wysiwyg.js"></script>
+	<script type="text/javascript" src="js/jquery.date_input.pack.js"></script>
+
+	<script type="text/javascript" src="js/facebox.js"></script>
+	<script type="text/javascript" src="js/jquery.visualize.js"></script>
+	<script type="text/javascript" src="js/jquery.select_skin.js"></script>
+	<script type="text/javascript" src="js/ajaxupload.js"></script>
+	<script type="text/javascript" src="js/jquery.pngfix.js"></script>
+	<script type="text/javascript" src="js/custom.js"></script>
+
+</head>
+<!--
+style div message:success,error,info,warning
+-->
+<body>
+	<div id="hld">
+		<div class="wrapper">		<!-- wrapper begins -->
+			<div class="block small center login">
+				<div class="block_head">
+					<div class="bheadl"></div>
+
+					<div class="bheadr"></div>
+					
+					<h2>Authentification</h2>
+					<ul>
+						<li><a href="/setconfig.php">config</a></li>
+					</ul>
+				</div>		<!-- .block_head ends -->
+				<div class="block_content">
+
+					<?php 
+						if (isset($_REQUEST['error']) && !isset($message)) {
+							$msgType="error";
+							$message="Le serveur LDAP a retourné une erreur:<br>";
+							$message.="- Vérifier le fichier de configuration,<br>";
+							$message.="- Vérifier votre Login et mot de passe.";
+						}
+						if (!empty($message)) {
+							echo "<div class=\"message $msgType\"><p>$message</p></div>";
+						}
+					?>
+					<form action="" method="post">
+						<p>
+							<label>Utilisateur:</label> <br />
+							<input type="text" name="userName" class="text" placeholder="Administrateur" <?php if(!empty($user)) echo "value=\"".$user."\""; ?>/>
+						</p>
+						
+						<p>
+							<label>Mot de passe:</label> <br />
+							<input type="password" name="userPass" class="text" placeholder="password" <?php if(!empty($password)) echo "value=\"".$password."\""; ?>/>
+						</p>
+						
+						<p>
+							<input type="submit" name="btnValider" class="submit" value="Valider" /> &nbsp; 
+							<!--
+							<input type="checkbox" class="checkbox" checked="checked" id="rememberme" /> <label for="rememberme">Remember me</label>
+							-->
+						</p>
+
+					</form>
+					
+				</div>		<!-- .block_content ends -->
+					
+				<div class="bendl"></div>
+				<div class="bendr"></div>
+			</div>		<!-- .login ends -->
+		</div>			<!-- wrapper ends -->
+	</div>				<!-- #hld ends -->
+</body>
+</html>

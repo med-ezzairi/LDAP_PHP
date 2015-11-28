@@ -1,0 +1,42 @@
+.column{
+	width:100%;
+	margin-right:5%;
+	min-height:150px;
+	background:#fff;
+	float:left;
+}
+.columnNoMov{
+	width:100%;
+	margin-right:5%;
+	min-height:150px;
+	background:#fff;
+	float:left;
+}
+.column .dragbox,.columnNoMov .dragbox{
+	margin:3px 2px 3px;
+	background:#fff;
+	position:relative;
+	border:1px solid #ddd;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+.column .dragbox h2,.columnNoMov .dragbox h2{
+	margin:1px;
+	font-size:12px;
+	padding:0px 1px 1px 5px; /*top right bottom left */
+	background:#f0f0f0;
+	color:#000;
+	border-bottom:1px solid #eee;
+	font-family:Verdana;
+	cursor:move;
+}
+.dragbox-content{
+	background:#fff;
+	min-height:100px;
+	margin:5px;
+	font-family:'Lucida Grande', Verdana; font-size:0.8em; line-height:1.5em;
+}
+.column  .placeholder{
+	background: #f0f0f0;
+	border:1px dashed #ddd;
+}

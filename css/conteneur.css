@@ -1,0 +1,232 @@
+﻿fieldset{
+			padding: 15px;
+			border-radius: 5px;
+			border:0.5px solid rgba(0,0,0,0.2);
+			font-size: 12;
+			/*text-transform: uppercase;*/
+			font-weight: bold;
+			margin-bottom: 5px;
+			max-width: 400px;
+		}
+#divNoir{
+	z-index: 9997;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	position: absolute;
+	background-color: gray;
+	opacity: 0.6;
+	display:none;
+}
+#ocontent{
+	z-index: 9998;
+	padding: 10px;
+	width: 35%;
+	height: 60%;
+	left: 30%;
+	top: 10%;
+	border: 1px blue solid;
+	border-radius: 10px;
+	position: absolute;
+	box-shadow: 0px 0px 14px gray;
+	background-color: white;
+	display:none;
+}
+
+#ohead{
+	height: 5%;
+	text-align: center;
+	font-weight: bold;
+
+}
+#olistou{
+	height: 84%;
+	overflow-y:scroll;
+	margin-bottom: 15px;
+}
+#obottom{
+	
+}
+input[name=parentpath]{
+	font-size: 10px;
+}
+/*
+div delete user confirmation
+*/
+#userDelete{
+	z-index: 9998;
+	padding:10px 10px 10px 80px;
+	width: 35%;
+	height: 80px;
+	left: 30%;
+	top: 30%;
+	border: 1px solid;
+	border-radius: 10px;
+	position: absolute;
+	box-shadow: 0px 0px 14px gray;
+	background-color: #BDE5F8;
+	background: #ecf9ff url(../images/info.png) 20px 32px no-repeat;
+	display:none;
+}
+#msgText{
+	color: #00529B;
+	margin-top: 10px;
+	height: 40px;
+	font-size: 14px;
+}
+#userDelete #divButton,#resetpassword #divButton{
+	width: 200px;
+	height: 25px;
+	float: right;
+}
+#loading{
+	z-index: 9999;
+	font-size: 14px;
+	text-align: center;
+	color: #00529B;
+	padding:10px 10px 10px 10px;
+	width: 35%;
+	height: 80px;
+	left: 30%;
+	top: 30%;
+	border: 1px solid;
+	border-radius: 10px;
+	position: absolute;
+	box-shadow: 0px 0px 14px gray;
+	background-color: #BDE5F8;
+	background: #ecf9ff url(../images/loading.gif) center center no-repeat;
+	display:none;
+}
+/******************************************************************
+/******************************************************************
+/******************************************************************/
+div .oulist{
+	width:40%;
+	float:left;
+	clear:none;
+	border-right:2px solid rgba(0,0,0,0.2);
+	min-height:550px;
+}
+/*
+div #ouInfos{
+	width:59%;
+	float:right;
+	clear:none;
+	min-height:550px;
+}*/
+div #ouRight{
+	width:59%;
+	float:right;
+	clear:none;
+	min-height:550px;
+}
+/******************************************************************
+/*****************************************************************/
+#passEx{
+	font-size: 10;
+	color: red;
+}
+#passVal{
+	font-size: 10;
+	color: green;
+}
+#in_content{
+	/*height:470px;*/
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+#divtable{
+	border:0.5px solid rgba(0,0,0,0.2);
+	border-radius: 5px;
+	width: 780px;
+	overflow: visible;
+	float: left;
+}
+#resetpassword{
+	position: absolute;
+	padding: 15px 15px 15px 20px;
+	border:1px solid  rgba(0,0,0,0.2);
+	border-radius: 5px;
+	width: 450px;
+	left: 30%;
+	top: 25%;
+	background: white;
+	z-index: 9998;
+	display:none;
+}
+#passerror{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 87%;
+	border-radius: 5px;
+	border:1px solid  rgba(0,0,0,0.2);
+	padding: 5px 5px 5px 28px;
+	color: #e3302c;
+	background:#ffecce url("../images/error.gif") 8px center no-repeat;
+	display:none;
+}
+#operations{
+	width: 247px;
+	display: inline-block;
+	border-radius: 5px;
+	float: right;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	padding-left: 10px;
+}
+
+input.submit.long{
+	width: 165px;
+	background: url("../images/btnb.gif") no-repeat scroll center top transparent;
+	height: 30px;
+	line-height: 30px;
+	border: 0 none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: "Titillium800","Trebuchet MS",Arial,sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 10px;
+    text-shadow: 1px 1px 0 #0A5482;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin-bottom: 5px;
+}
+input.submit.long:hover{
+	background: url("../images/btnb_.gif") no-repeat scroll center top transparent;
+}
+input.submit.long.inputDisabled{
+	text-decoration: line-through;
+	color: gray;
+}
+/******************************************************
+**
+******************************************************/
+.home{
+	background-color:rgba(0,0,0,0.2);
+	border:1px solid black;
+	border-radius: 5px;
+	width: 128px;
+	height: 150px;
+	overflow:visible;
+	box-shadow: 0px 0px 2px 4px rgba(0,0,0,0.2);
+	cursor: pointer;
+}
+.home:hover{
+	box-shadow: 0px 0px 2px 4px rgba(0,0,0,0.5);
+}
+.home div[id=text]{
+	text-align: center;
+    font-family: "Titillium800","Trebuchet MS",Arial,sans-serif;
+    text-decoration:none;
+    font-weight: bold;
+}
+.home div[id=text]:visited{
+    text-decoration:none;
+}
+table.notabstyle tr td{
+	border:none;
+}
